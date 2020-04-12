@@ -47,6 +47,7 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
  * @author Clinton Begin
  * @author Kazuki Shimizu
  */
+//适用于mysql h2
 public class Jdbc3KeyGenerator implements KeyGenerator {
 
   private static final String SECOND_GENERIC_PARAM_NAME = ParamNameResolver.GENERIC_NAME_PREFIX + "2";

@@ -36,6 +36,7 @@ import org.apache.ibatis.transaction.Transaction;
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
+//缓存执行器
 public class CachingExecutor implements Executor {
 
   private final Executor delegate;
@@ -72,6 +73,7 @@ public class CachingExecutor implements Executor {
 
   @Override
   public int update(MappedStatement ms, Object parameterObject) throws SQLException {
+    //二级缓存的逻辑
     flushCacheIfRequired(ms);
     return delegate.update(ms, parameterObject);
   }
@@ -92,11 +94,14 @@ public class CachingExecutor implements Executor {
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)
       throws SQLException {
+    //MappedStatement整个生命周期都存在的，如果有配置文件 有注解的 会有两个
+    //二级缓存
     Cache cache = ms.getCache();
     if (cache != null) {
       flushCacheIfRequired(ms);
       if (ms.isUseCache() && resultHandler == null) {
         ensureNoOutParams(ms, boundSql);
+        //事务缓存管理器获取缓存
         @SuppressWarnings("unchecked")
         List<E> list = (List<E>) tcm.getObject(cache, key);
         if (list == null) {

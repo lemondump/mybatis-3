@@ -35,12 +35,15 @@ import org.apache.ibatis.logging.LogFactory;
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
+//属于session的cache，put的时候不会直接放到二级缓存中，session关闭才会放进去
 public class TransactionalCache implements Cache {
 
   private static final Log log = LogFactory.getLog(TransactionalCache.class);
 
+  //二级缓存的cache（多层嵌套的 单一职责 每个cache做一件事情）
   private final Cache delegate;
   private boolean clearOnCommit;
+  //这两个是本地的缓存 提交或者回滚的时候需要使用
   private final Map<Object, Object> entriesToAddOnCommit;
   private final Set<Object> entriesMissedInCache;
 

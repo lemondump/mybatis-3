@@ -30,6 +30,7 @@ import org.apache.ibatis.session.RowBounds;
  * @author Clinton Begin
  * @author Jeff Butler
  */
+//适用于Oracle、PostgreSQL
 public class SelectKeyGenerator implements KeyGenerator {
 
   public static final String SELECT_KEY_SUFFIX = "!selectKey";

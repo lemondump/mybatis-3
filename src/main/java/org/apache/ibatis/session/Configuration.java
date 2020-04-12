@@ -644,9 +644,13 @@ public class Configuration {
     } else {
       executor = new SimpleExecutor(this, transaction);
     }
+    //缓存执行器
     if (cacheEnabled) {
+      //将真正的缓存放入
       executor = new CachingExecutor(executor);
     }
+
+    //拦截器链 拦截器插件
     executor = (Executor) interceptorChain.pluginAll(executor);
     return executor;
   }

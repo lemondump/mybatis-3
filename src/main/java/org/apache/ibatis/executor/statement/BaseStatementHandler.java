@@ -56,6 +56,7 @@ public abstract class BaseStatementHandler implements StatementHandler {
     this.mappedStatement = mappedStatement;
     this.rowBounds = rowBounds;
 
+    //类型处理器
     this.typeHandlerRegistry = configuration.getTypeHandlerRegistry();
     this.objectFactory = configuration.getObjectFactory();
 
@@ -66,7 +67,9 @@ public abstract class BaseStatementHandler implements StatementHandler {
 
     this.boundSql = boundSql;
 
+    //参数Handler
     this.parameterHandler = configuration.newParameterHandler(mappedStatement, parameterObject, boundSql);
+    //结果Handler
     this.resultSetHandler = configuration.newResultSetHandler(executor, mappedStatement, rowBounds, parameterHandler, resultHandler, boundSql);
   }
 

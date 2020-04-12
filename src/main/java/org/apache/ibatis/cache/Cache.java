@@ -38,7 +38,7 @@ import java.util.concurrent.locks.ReadWriteLock;
  *
  * @author Clinton Begin
  */
-
+//缓存
 public interface Cache {
 
   /**

@@ -69,6 +69,8 @@ public @interface CacheNamespace {
    *
    * @return the flush interval
    */
+  //缓存数据有限期 ，get或者put的时候清空
+  //对缓存处理的时候被动调用
   long flushInterval() default 0;
 
   /**
@@ -76,6 +78,7 @@ public @interface CacheNamespace {
    *
    * @return the cache size
    */
+  //最多1024此查询的结果
   int size() default 1024;
 
   /**
@@ -83,6 +86,7 @@ public @interface CacheNamespace {
    *
    * @return {@code true} if use read/write cache; {@code false} if otherwise
    */
+  //如果为true返回的对象是copy的对象，为false返回的是原始的对象，此时比较危险 如果修改 会直接修改对象
   boolean readWrite() default true;
 
   /**
@@ -90,6 +94,7 @@ public @interface CacheNamespace {
    *
    * @return {@code true} if block the cache; {@code false} if otherwise
    */
+  //防止缓存击穿 同时来的时候会锁住
   boolean blocking() default false;
 
   /**

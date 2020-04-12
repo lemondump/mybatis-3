@@ -59,15 +59,18 @@ public class BlockingCache implements Cache {
     try {
       delegate.putObject(key, value);
     } finally {
+      //放完是否锁
       releaseLock(key);
     }
   }
 
   @Override
   public Object getObject(Object key) {
+    //取得时候先锁住
     acquireLock(key);
     Object value = delegate.getObject(key);
     if (value != null) {
+      //取得值就释放
       releaseLock(key);
     }
     return value;
